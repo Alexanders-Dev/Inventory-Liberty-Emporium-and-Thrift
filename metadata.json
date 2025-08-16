@@ -1,0 +1,5 @@
+{
+  "name": "Smart Inventory AI",
+  "description": "An intelligent inventory management application. Upload a picture of an item, and our AI will provide a detailed description and an estimated price. Once your inventory is complete, you can easily print a PDF report.",
+  "requestFramePermissions": []
+}
