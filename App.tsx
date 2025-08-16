@@ -161,6 +161,7 @@ const App: React.FC = () => {
       <Header 
         hasItems={inventoryItems.length > 0} 
         onAddItemManually={handleOpenManualAdd}
+        inventoryItems={inventoryItems}
       />
       <main className="container mx-auto p-4 md:p-8 print:p-0">
         <div className="print:hidden">

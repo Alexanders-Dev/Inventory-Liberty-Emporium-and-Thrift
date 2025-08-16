@@ -1,13 +1,20 @@
 import React from 'react';
+import { exportToCSV } from '../utils/csvExport';
+import type { InventoryItem } from '../types';
 
 interface HeaderProps {
     hasItems: boolean;
     onAddItemManually: () => void;
+    inventoryItems: InventoryItem[];
 }
 
-const Header: React.FC<HeaderProps> = ({ hasItems, onAddItemManually }) => {
+const Header: React.FC<HeaderProps> = ({ hasItems, onAddItemManually, inventoryItems }) => {
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleExportCSV = () => {
+    exportToCSV(inventoryItems, 'my-inventory');
   };
 
   return (
@@ -30,6 +37,16 @@ const Header: React.FC<HeaderProps> = ({ hasItems, onAddItemManually }) => {
               <span>Add Manually</span>
             </button>
             {hasItems && (
+                <>
+                <button
+                  onClick={handleExportCSV}
+                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                  <span>Export CSV</span>
+                </button>
                 <button
                   onClick={handlePrint}
                   className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
@@ -39,6 +56,7 @@ const Header: React.FC<HeaderProps> = ({ hasItems, onAddItemManually }) => {
                   </svg>
                   <span>Print Inventory</span>
                 </button>
+                </>
             )}
         </div>
       </div>
