@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { InventoryItem } from '../types';
-import ImageGalleryEditor from './ImageGalleryEditor';
+import ImageGalleryEditor from './ImageGalleryEditor.tsx';
 
 interface EditItemModalProps {
   isOpen: boolean;

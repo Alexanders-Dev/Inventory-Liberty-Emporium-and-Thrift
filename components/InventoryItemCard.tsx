@@ -1,6 +1,6 @@
 import React from 'react';
 import type { InventoryItem } from '../types';
-import ImageCarousel from './ImageCarousel';
+import ImageCarousel from './ImageCarousel.tsx';
 
 interface InventoryItemCardProps {
   item: InventoryItem;
