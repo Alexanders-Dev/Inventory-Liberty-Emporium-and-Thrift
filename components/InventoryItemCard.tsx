@@ -1,5 +1,6 @@
 import React from 'react';
 import type { InventoryItem } from '../types';
+import ImageCarousel from './ImageCarousel';
 
 interface InventoryItemCardProps {
   item: InventoryItem;
@@ -11,11 +12,7 @@ const InventoryItemCard: React.FC<InventoryItemCardProps> = ({ item, onRemove, o
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col md:flex-row print:shadow-none print:border-b print:rounded-none print:break-inside-avoid">
       <div className="md:w-1/3">
-        <img
-          className="h-48 w-full object-cover md:h-full"
-          src={item.imageUrl}
-          alt={item.name}
-        />
+        <ImageCarousel images={item.imageUrls} itemName={item.name} />
       </div>
       <div className="w-full p-6 flex flex-col justify-between">
         <div>

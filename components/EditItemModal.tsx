@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { InventoryItem } from '../types';
+import ImageGalleryEditor from './ImageGalleryEditor';
 
 interface EditItemModalProps {
   isOpen: boolean;
@@ -9,12 +10,13 @@ interface EditItemModalProps {
 }
 
 const EditItemModal: React.FC<EditItemModalProps> = ({ isOpen, item, onSave, onClose }) => {
-  const [formData, setFormData] = useState<Omit<InventoryItem, 'id' | 'imageUrl'>>({
+  const [formData, setFormData] = useState<Omit<InventoryItem, 'id' | 'imageUrls'>>({
     name: '',
     description: '',
     estimatedPrice: '',
     category: '',
   });
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
     if (isOpen) {
@@ -25,6 +27,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({ isOpen, item, onSave, onC
             estimatedPrice: item.estimatedPrice,
             category: item.category,
           });
+          setImageUrls(item.imageUrls);
         } else {
           // Reset for manual entry
           setFormData({
@@ -33,6 +36,7 @@ const EditItemModal: React.FC<EditItemModalProps> = ({ isOpen, item, onSave, onC
             estimatedPrice: '',
             category: '',
           });
+          setImageUrls([]);
         }
     }
   }, [item, isOpen]);
@@ -47,11 +51,11 @@ const EditItemModal: React.FC<EditItemModalProps> = ({ isOpen, item, onSave, onC
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const finalItem: InventoryItem = item 
-      ? { ...item, ...formData }
+      ? { ...item, ...formData, imageUrls }
       : { 
           id: new Date().toISOString(), 
-          imageUrl: 'https://via.placeholder.com/300x200.png?text=No+Image', // Placeholder for manual entry
-          ...formData 
+          imageUrls: imageUrls.length > 0 ? imageUrls : ['https://via.placeholder.com/300x200.png?text=No+Image'],
+          ...formData
         };
     onSave(finalItem);
   };
@@ -62,6 +66,10 @@ const EditItemModal: React.FC<EditItemModalProps> = ({ isOpen, item, onSave, onC
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{item ? 'Edit Item' : 'Add New Item'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Images (up to 4)</label>
+              <ImageGalleryEditor imageUrls={imageUrls} onImagesChange={setImageUrls} />
+            </div>
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">Item Name</label>
               <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>

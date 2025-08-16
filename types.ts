@@ -1,6 +1,6 @@
 export interface InventoryItem {
   id: string;
-  imageUrl: string;
+  imageUrls: string[];
   name: string;
   description: string;
   estimatedPrice: string;

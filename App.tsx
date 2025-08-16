@@ -61,7 +61,7 @@ const App: React.FC = () => {
             const analysis = await analyzeInventoryItem(base64Image, file.type);
             const newItem: InventoryItem = {
               id: new Date().toISOString(),
-              imageUrl: URL.createObjectURL(file),
+              imageUrls: [URL.createObjectURL(file)],
               name: analysis.itemName,
               description: analysis.description,
               estimatedPrice: analysis.estimatedPrice,
